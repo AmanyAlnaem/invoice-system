@@ -53,7 +53,7 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
-        
+       
         // 2. إنشاء الفاتورة بالرقم المولد تلقائياً
         $invoice = Invoice::create([
             'invoice_number' => $request->invoice_number,
@@ -64,18 +64,18 @@ class InvoiceController extends Controller
 
         // 3. معالجة المواد داخل الفاتورة
         foreach ($request->items as $itemData) {
-            $item = Item::find($itemData['item_id']); 
+            // تجاهل السطر إذا كان رقم المادة فارغاً أو غير موجود
+            if (empty($itemData['item_id'])) {
+                continue;
+            }
 
-            $invoice->items()->attach($item->id, [
-                'quantity' => $itemData['quantity'],
-                'price' => $itemData['price']
-            ]);
+            $item = Item::find($itemData['item_id']);
 
-            // تحديث الكمية في المخزن بناءً على نوع الفاتورة
-            if ($request->type == 'in') {
-                $item->increment('quantity', $itemData['quantity']);
-            } else {
-                $item->decrement('quantity', $itemData['quantity']);
+            if ($item) {
+                $invoice->items()->attach($item->id, [
+                    'quantity' => $itemData['quantity'] ?? 0, // تجنب أخطاء القيم الفارغة أيضاً
+                    'price' => $itemData['price'] ?? 0
+                ]);
             }
         }
 
