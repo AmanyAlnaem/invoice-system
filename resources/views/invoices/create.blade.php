@@ -106,9 +106,10 @@
             <div class="card-body">
                 <div class="row mb-4 no-print">
                     <div class="col-md-3">
-                        <label class="form-label fw-bold small">رقم الفاتورة</label>
-                        <input type="text" class="form-control bg-light fw-bold" value="{{ $generatedCode }}" readonly>
-                    </div>
+    <label class="form-label fw-bold">رقم الفاتورة</label>
+    <input type="text" name="invoice_number" class="form-control bg-light" value="{{ $generatedCode }}" readonly>
+</div>
+
                     <div class="col-md-3">
                         <label class="form-label fw-bold small">تاريخ الفاتورة</label>
                         <input type="date" name="date" class="form-control" value="{{ date('Y-m-d') }}">

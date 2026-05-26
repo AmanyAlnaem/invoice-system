@@ -8,9 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Invoice extends Model
 {
     use HasFactory;
-
-    protected $fillable = ['invoice_number', 'type', 'date', 'user_id'];
-
+    protected $fillable = [
+        'invoice_number',
+        'type',
+        'date',
+        'user_id',
+        'total_amount',
+    ];
     public function user()
     {
         return $this->belongsTo(User::class);

@@ -53,13 +53,14 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
-       
+
         // 2. إنشاء الفاتورة بالرقم المولد تلقائياً
         $invoice = Invoice::create([
             'invoice_number' => $request->invoice_number,
-            'type' => $request->type, // وارد أو صادر
-            'date' => now(),
-            'user_id' => auth()->id(),
+            'type'           => $request->type,
+            'date'           => $request->date,
+            'user_id'        => auth()->id(),
+            'total_amount'   => $request->total_amount,
         ]);
 
         // 3. معالجة المواد داخل الفاتورة
